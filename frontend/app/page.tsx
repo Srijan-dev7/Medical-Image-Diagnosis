@@ -1,4 +1,4 @@
-import { Activity, ArrowRight, Brain, CheckCircle2, FileImage, Stethoscope } from "lucide-react";
+import { Activity, ArrowRight, Bone, Brain, CheckCircle2, FileImage, HeartPulse, Stethoscope } from "lucide-react";
 import { DiseaseCard } from "@/components/DiseaseCard";
 import { Navbar } from "@/components/Navbar";
 
@@ -29,8 +29,13 @@ export default function Home() {
 					<div className="hero-visual" aria-label="Medical scan preview">
 						<div className="xray-frame">
 							<div className="minimal-scan-mark">
-								<span />
+								<div className="modality-icons" aria-hidden="true">
+									<Brain size={27} />
+									<HeartPulse size={27} />
+									<Bone size={27} />
+								</div>
 							</div>
+							<div className="scan-label">BRAIN · LUNGS · BONE</div>
 						</div>
 					</div>
 				</section>
