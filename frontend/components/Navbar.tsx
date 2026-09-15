@@ -18,6 +18,7 @@ export function Navbar() {
 		const savedTheme = window.localStorage.getItem("medical-theme");
 		const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 		const enabled = savedTheme ? savedTheme === "dark" : prefersDark;
+		setDarkMode(enabled);
 		document.documentElement.classList.toggle("dark", enabled);
 	}, []);
 
@@ -53,9 +54,6 @@ export function Navbar() {
 							<Icon size={15} />{label}
 						</Link>
 					))}
-					<button className="research-button" type="button">
-						RESEARCH PORTAL
-					</button>
 					<span className="nav-divider" />
 					<button className="icon-button" type="button" aria-label="Toggle theme" onClick={toggleTheme}>
 						<span className={`theme-icon ${darkMode ? "show-sun" : "show-moon"}`}>

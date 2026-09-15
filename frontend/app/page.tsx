@@ -47,19 +47,19 @@ export default function Home() {
 					<div className="workflow-grid">
 						<DiseaseCard
 							title="Pneumonia"
-							description="Deploys dual-path DenseNet models trained on NIH ChestX-ray14 to screen for pneumonia and inflammatory fluid."
+							description="Analyze chest X-ray images and classify them as normal or showing signs of pneumonia."
 							type="Chest X-ray"
 							href="/pneumonia"
 						/>
 						<DiseaseCard
 							title="Brain Tumor"
-							description="Utilizes high-resolution T2-weighted MRI classifiers to segment and detect boundaries of glioblastomas, meningiomas, and pituitary tumors."
+							description="Analyze brain MRI scans to identify glioma, meningioma, pituitary tumor, or no tumor."
 							type="MRI Scan"
 							href="/brain-tumor"
 						/>
 						<DiseaseCard
 							title="Bone Fracture"
-							description="Analyzes structural orthopedic radiographs to flag cortical discontinuities and stress lines along appendicular and axial skeletal segments."
+							description="Analyze bone X-ray images and classify them as fractured or not fractured."
 							type="X-ray"
 							href="/bone-fracture"
 						/>
