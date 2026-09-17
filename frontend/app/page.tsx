@@ -1,6 +1,7 @@
 import { Activity, ArrowRight, Bone, Brain, CheckCircle2, FileImage, HeartPulse, Stethoscope } from "lucide-react";
 import { DiseaseCard } from "@/components/DiseaseCard";
 import { Navbar } from "@/components/Navbar";
+import { ClinicalDocsDialog } from "@/components/ClinicalDocsDialog";
 
 export default function Home() {
 	return (
@@ -21,9 +22,7 @@ export default function Home() {
 							<a href="/diagnosis" className="primary-action">
 								Start Diagnosis <ArrowRight size={16} />
 							</a>
-							<a href="/diagnosis" className="secondary-action">
-								Read Clinical Docs
-							</a>
+							<ClinicalDocsDialog />
 						</div>
 					</div>
 					<div className="hero-visual" aria-label="Medical scan preview">

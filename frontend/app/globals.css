@@ -156,6 +156,31 @@ body { background: #ffffff; color: var(--ink); }
 .primary-action, .secondary-action { display: inline-flex; align-items: center; gap: 8px; border-radius: 12px; text-decoration: none; font-weight: 700; }
 .primary-action { padding: 14px 20px; background: linear-gradient(135deg,#1f77d7,#1e6ce4); color: white; box-shadow: 0 10px 20px rgba(31,119,215,.24); }
 .secondary-action { padding: 14px 18px; color: #2d4d79; border: 1px solid #d9e5f4; background: rgba(255,255,255,.5); }
+.primary-action, .secondary-action { cursor: pointer; transition: transform .2s ease, background-color .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.primary-action:hover { transform: translateY(-2px); background: linear-gradient(135deg,#176ac4,#185fcf); box-shadow: 0 12px 24px rgba(31,119,215,.3); }
+.secondary-action:hover { transform: translateY(-2px); border-color: #8db9e9; background: #f1f7ff; box-shadow: 0 8px 18px rgba(59,94,142,.1); }
+.primary-action:focus-visible, .secondary-action:focus-visible { outline: 3px solid rgba(47,132,222,.3); outline-offset: 3px; }
+.clinical-docs-backdrop { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 20px; background: rgba(18,34,74,.32); backdrop-filter: blur(4px); }
+.clinical-docs-dialog { width: min(100%, 560px); padding: 24px; border: 1px solid #d7e4f3; border-radius: 16px; background: #fff; box-shadow: 0 24px 70px rgba(23,48,91,.2); }
+.clinical-docs-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.clinical-docs-header .eyebrow { font-size: 8px; }
+.clinical-docs-header h2 { margin: 12px 0 0; color: #172c51; font-size: 27px; letter-spacing: -.6px; }
+.clinical-docs-close { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #d9e5f4; border-radius: 8px; background: #f7faff; color: #587094; cursor: pointer; }
+.clinical-docs-intro { margin: 18px 0; color: #647a9a; font-size: 13px; line-height: 1.5; }
+.clinical-docs-options { display: grid; gap: 10px; }
+.clinical-doc-option { display: flex; align-items: center; gap: 12px; width: 100%; padding: 13px; border: 1px solid #dce8f5; border-radius: 10px; background: #fbfdff; color: #1c3358; text-align: left; cursor: pointer; transition: border-color .2s, background-color .2s, transform .2s; }
+.clinical-doc-option:hover { border-color: #71a8e8; background: #f2f8ff; transform: translateX(2px); }
+.clinical-doc-icon { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 9px; background: #eaf4ff; color: #1b73d8; }
+.clinical-doc-option strong, .clinical-doc-option small { display: block; }
+.clinical-doc-option strong { font-size: 14px; }
+.clinical-doc-option small { margin-top: 3px; color: #7085a3; font-size: 11px; }
+.clinical-doc-detail { margin-top: 22px; color: #536b8d; font-size: 13px; line-height: 1.6; }
+.clinical-doc-detail-title { display: flex; align-items: center; gap: 10px; color: #1b73d8; }
+.clinical-doc-detail-title h3 { margin: 0; color: #1b2e4d; font-size: 22px; }
+.clinical-doc-detail-title span { color: #7085a3; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+.clinical-doc-detail h4 { margin: 20px 0 4px; color: #1b2e4d; font-size: 13px; }
+.clinical-doc-back { margin-top: 10px; padding: 0; border: 0; background: transparent; color: #1b73d8; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.clinical-docs-disclaimer { margin: 22px 0 0; padding-top: 13px; border-top: 1px solid #e6eef8; color: #8899b0; font-size: 10px; }
 .hero-visual { position: relative; min-height: 340px; }
 .xray-frame { position: absolute; width: 360px; height: 275px; right: 22px; top: 3px; overflow: hidden; border-radius: 8px; background: rgba(245,248,252,.7); border: 1px solid rgba(121,160,199,.6); box-shadow: 0 16px 26px rgba(98,127,167,.08); transform: rotate(-0deg); }
 .xray-frame { display: grid; place-items: center; background: #fbfdff; box-shadow: none; }
