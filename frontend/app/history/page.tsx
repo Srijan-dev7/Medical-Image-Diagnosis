@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChevronDown, Filter, History, RotateCcw } from "lucide-react";
+import { ChevronDown, Filter, History, RotateCcw, Trash2 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -21,6 +21,23 @@ export default function HistoryPage() {
   const [disease, setDisease] = useState("");
   const [modelVariant, setModelVariant] = useState("");
   const [error, setError] = useState("");
+
+  async function deleteRecord(id: string) {
+    if (!window.confirm("Delete this prediction from history?")) return;
+
+    try {
+      const response = await fetch("/api/history", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.detail || "Unable to delete prediction.");
+      setRecords((currentRecords) => currentRecords.filter((record) => record._id !== id));
+    } catch (reason: unknown) {
+      setError(reason instanceof Error ? reason.message : "Unable to delete prediction.");
+    }
+  }
 
   useEffect(() => {
     const query = new URLSearchParams({ limit: "100" });
@@ -88,6 +105,7 @@ export default function HistoryPage() {
                     <th className="p-3">Confidence</th>
                     <th className="p-3">Model</th>
                     <th className="p-3">Image</th>
+                    <th className="p-3">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -99,6 +117,11 @@ export default function HistoryPage() {
                       <td className="p-3">{(record.confidence * 100).toFixed(1)}%</td>
                       <td className="p-3">{record.modelName}</td>
                       <td className="p-3">{record.imageName}</td>
+                      <td className="p-3">
+                        <button type="button" className="history-delete-button" aria-label={`Delete ${record.imageName} prediction`} title="Delete prediction" onClick={() => deleteRecord(record._id)}>
+                          <Trash2 size={16} />
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { Upload } from "lucide-react";
+import { Info, Trash2, Upload } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -18,7 +18,34 @@ export function DiagnosisWorkspace({
   const [variant, setVariant] = useState("transfer_learning");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showExplanation, setShowExplanation] = useState(false);
+  const [uploadInputKey, setUploadInputKey] = useState(0);
   const [result, setResult] = useState<{ prediction: string; confidence: number; model_name: string; model_variant: string } | null>(null);
+
+  function getResultExplanation(prediction: string) {
+    if (disease === "Pneumonia") {
+      return prediction === "PNEUMONIA"
+        ? "The model found image patterns associated with pneumonia in this chest X-ray."
+        : "The model did not find image patterns associated with pneumonia and classified this chest X-ray as normal.";
+    }
+    if (disease === "Brain Tumor") {
+      return prediction === "notumor"
+        ? "The model classified this MRI as showing no tumor pattern."
+        : `The model classified this MRI as ${prediction}, a tumor category that should be reviewed by a qualified clinician.`;
+    }
+    return prediction === "fractured"
+      ? "The model found image patterns associated with a fracture in this X-ray."
+      : "The model did not find image patterns associated with a fracture in this X-ray.";
+  }
+
+  function deleteImage() {
+    setFile(null);
+    setPreview("");
+    setResult(null);
+    setError("");
+    setShowExplanation(false);
+    setUploadInputKey((key) => key + 1);
+  }
 
   const scratchLabel =
     disease === "Pneumonia"
@@ -41,6 +68,7 @@ export function DiagnosisWorkspace({
       const data = await response.json();
       if (!response.ok) throw new Error(data.detail || "Prediction request failed");
       setResult(data);
+      setShowExplanation(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Network error");
     } finally {
@@ -67,6 +95,7 @@ export function DiagnosisWorkspace({
 
           <label className="upload-dropzone">
             <input
+			  key={uploadInputKey}
               type="file"
               accept=".jpg,.jpeg,.png"
               onChange={(event) => {
@@ -105,9 +134,15 @@ export function DiagnosisWorkspace({
             </select>
           </div>
 
-          <button type="button" className="analyze-button" onClick={analyze} disabled={!file || loading}>
-            {loading ? "Analyzing..." : "Analyze Image"}
-          </button>
+          <div className="analysis-actions">
+            <button type="button" className="analyze-button" onClick={analyze} disabled={!file || loading}>
+              {loading ? "Analyzing..." : "Analyze Image"}
+            </button>
+            <button type="button" className="delete-image-button" onClick={deleteImage} disabled={!file && !preview && !result}>
+              <Trash2 size={17} />
+              Delete Image
+            </button>
+          </div>
         </section>
 
         <section className="output-panel">
@@ -127,6 +162,22 @@ export function DiagnosisWorkspace({
                   <strong>{(result.confidence * 100).toFixed(1)}%</strong>
                 </div>
               </div>
+              <button
+                type="button"
+                className="explanation-button"
+                aria-expanded={showExplanation}
+                onClick={() => setShowExplanation((visible) => !visible)}
+              >
+                <Info size={16} />
+                {showExplanation ? "Hide Explanation" : "Explain This Result"}
+              </button>
+              {showExplanation && (
+                <div className="explanation-box">
+                  <strong>What this output means</strong>
+                  <p>{getResultExplanation(result.prediction)}</p>
+                  <p>The {result.confidence * 100 >= 70 ? "higher" : "lower"} confidence score ({(result.confidence * 100).toFixed(1)}%) indicates how strongly the model preferred this label. It is not a diagnosis or a substitute for medical evaluation.</p>
+                </div>
+              )}
               <div className="metrics-list">
                 <div className="metric-row">
                   <span>Classification Label</span>

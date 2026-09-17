@@ -31,3 +31,8 @@ export async function getPredictions({
 
   return Prediction.find(filter).sort({ createdAt: -1 }).limit(limit).lean();
 }
+
+export async function deletePrediction(id: string) {
+  await connectToDatabase();
+  return Prediction.findByIdAndDelete(id);
+}
