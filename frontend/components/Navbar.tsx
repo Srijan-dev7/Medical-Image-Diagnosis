@@ -16,8 +16,7 @@ export function Navbar() {
 
 	useEffect(() => {
 		const savedTheme = window.localStorage.getItem("medical-theme");
-		const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-		const enabled = savedTheme ? savedTheme === "dark" : prefersDark;
+		const enabled = savedTheme === "dark";
 		setDarkMode(enabled);
 		document.documentElement.classList.toggle("dark", enabled);
 	}, []);
